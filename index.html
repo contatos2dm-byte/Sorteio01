@@ -4,204 +4,193 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sorteio Tambor Xamânico | Apoio CTTC</title>
-
 <style>
-
-/* ====== PALETA REGENERATIVA ====== */
-:root {
-  --verde-floresta: #0B3D2E;
-  --verde-vivo: #1F7A4C;
-  --verde-claro: #4CAF50;
-  --amarelo-sol: #F4C430;
-  --bege-terra: #F5F1E6;
-  --branco: #FFFFFF;
-}
-
-/* ====== RESET ====== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  background: var(--bege-terra);
-  color: var(--verde-floresta);
-  text-align: center;
-}
-
-/* ====== HERO ====== */
-.hero {
-  background: linear-gradient(135deg, var(--verde-floresta), var(--verde-vivo));
-  color: var(--branco);
-  padding: 60px 20px;
-}
-
-.hero h1 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-}
-
-.hero p {
-  font-size: 1rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* ====== IMAGEM ====== */
-.image-section {
-  margin: 40px 20px;
-}
-
-.image-section img {
-  max-width: 350px;
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-}
-
-/* ====== NUMEROS ====== */
-.numbers {
-  display: grid;
-  grid-template-columns: repeat(5, 60px);
-  gap: 10px;
-  justify-content: center;
-  margin: 30px 0;
-}
-
-.number {
-  background: var(--verde-claro);
-  color: var(--branco);
-  padding: 15px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.number:hover {
-  background: var(--amarelo-sol);
-  color: var(--verde-floresta);
-}
-
-/* ====== BOTÃO ====== */
-.btn {
-  background: var(--amarelo-sol);
-  color: var(--verde-floresta);
-  padding: 15px 30px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-block;
-  margin: 20px 0;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: var(--verde-vivo);
-  color: var(--branco);
-}
-
-/* ====== CONTRIBUIÇÕES ====== */
-.contributions {
-  margin: 40px 20px;
-  font-size: 0.95rem;
-}
-
-.contributions p {
-  margin: 8px 0;
-}
-
-/* ====== LINKS ====== */
-.links {
-  margin: 40px 20px;
-}
-
-.links a {
-  display: block;
-  margin: 10px 0;
-  color: var(--verde-vivo);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.links a:hover {
-  text-decoration: underline;
-}
-
-/* ====== FOOTER ====== */
-footer {
-  margin: 50px 0 20px 0;
-  font-size: 0.8rem;
-  color: var(--verde-floresta);
-}
-
+    :root {
+        --verde-floresta: #0B3D2E; --verde-vivo: #1F7A4C; --verde-claro: #4CAF50;
+        --amarelo-sol: #F4C430; --bege-terra: #F5F1E6; --branco: #FFFFFF;
+        --cinza-ocupado: #888; --vermelho-erro: #d9534f;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: var(--bege-terra); color: var(--verde-floresta); text-align: center; }
+    .hero { background: linear-gradient(135deg, var(--verde-floresta), var(--verde-vivo)); color: var(--branco); padding: 60px 20px; }
+    .hero h1 { font-size: 2rem; margin-bottom: 15px; }
+    .hero p { font-size: 1rem; max-width: 600px; margin: 0 auto; }
+    .image-section { margin: 40px 20px; }
+    .image-section img { max-width: 350px; width: 100%; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .numbers { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 10px; justify-content: center; margin: 30px 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .number { background: var(--verde-claro); color: var(--branco); padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .number:hover { transform: scale(1.1); }
+    .number.pago { background: var(--cinza-ocupado); cursor: not-allowed; color: #ccc; }
+    .number.pago:hover { transform: none; }
+    .contributions { margin: 40px 20px; font-size: 0.95rem; }
+    .contributions p { margin: 8px 0; }
+    .contributions code { background: #e0e0e0; padding: 2px 6px; border-radius: 4px; }
+    .links { margin: 40px 20px; }
+    .links a { display: block; margin: 10px 0; color: var(--verde-vivo); text-decoration: none; font-weight: bold; }
+    .links a:hover { text-decoration: underline; }
+    footer { margin: 50px 0 20px 0; font-size: 0.8rem; color: var(--verde-floresta); }
+    /* Estilos do Modal */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+    .modal-content { background-color: #fefefe; margin: 10% auto; padding: 30px; border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 12px; text-align: left; }
+    .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+    .modal h2 { text-align: center; margin-bottom: 20px; color: var(--verde-floresta); }
+    .modal label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .modal input { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc; }
+    .modal .btn { background: var(--amarelo-sol); color: var(--verde-floresta); padding: 12px 25px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; border: none; cursor: pointer; width: 100%; font-size: 1rem; }
+    .modal .btn:hover { background: var(--verde-vivo); color: var(--branco); }
+    #modal-message { text-align: center; margin-top: 15px; font-weight: bold; }
+    .success { color: var(--verde-vivo); }
+    .error { color: var(--vermelho-erro); }
 </style>
 </head>
-
 <body>
 
-<!-- HERO -->
 <section class="hero">
   <h1>Sorteio Solidário – Tambor Xamânico</h1>
-  <p>
-    50 números | R$ 10 cada  
-    <br>
-    Apoio ao primeiro piloto da Célula de Transferência Tecnológica Comunitária (CTTC)
-  </p>
+  <p>50 números | R$ 10 cada  
+Apoio ao primeiro piloto da Célula de Transferência Tecnológica Comunitária (CTTC)</p>
 </section>
 
-<!-- FOTO -->
 <section class="image-section">
-  <!-- Substituir pelo link da foto oficial -->
   <img src="https://via.placeholder.com/350x350.png?text=Tambor+Xamanico" alt="Tambor Xamânico">
 </section>
 
-<!-- NUMEROS -->
 <section>
-  <h2>Escolha seu número</h2>
-  <div class="numbers">
-    <!-- 01 a 50 -->
-    <script>
-      for(let i=1; i<=50; i++){
-        let num = i.toString().padStart(2,'0');
-        document.write(`<div class="number">${num}</div>`);
-      }
-    </script>
-  </div>
+  <h2>Escolha seu número da sorte!</h2>
+  <div class="numbers" id="rifa-numeros"></div>
 </section>
 
-<!-- BOTÃO APOIAR -->
-<a href="#" class="btn">Apoiar e Confirmar Número</a>
-
-<!-- CONTRIBUIÇÕES -->
 <section class="contributions">
-  <h3>Contribuições</h3>
-  <p><strong>Chave Pix:</strong> contatos.2dm@gmail.com</p>
-  <p><strong>Carteira Web3 (Metamask):</strong><br>
-  0xe35C47EFE510f0220454f89e547610c84647267c</p>
+  <h3>Como Contribuir (R$ 10 por número )</h3>
+  <p>1. Realize o pagamento via Pix ou Cripto.</p>
+  <p>2. Clique no número desejado, preencha seus dados e o código da transação.</p>
+  <p><strong>Chave Pix (email):</strong> <code>contatos.2dm@gmail.com</code></p>
+  <p><strong>Carteira Web3 (ETH/Polygon):</strong>  
+ <code>0xe35C47EFE510f0220454f89e547610c84647267c</code></p>
+  <p><strong>Obs.:</strong> Guarde o comprovante (ID da transação Pix ou Hash da transação cripto) para confirmar sua compra.</p>
 </section>
 
-<!-- LINKS -->
 <section class="links">
   <h3>Saiba mais</h3>
-  <a href="https://app.charmverse.io/greenpillbrasil/2dm-projects-02471603878898443" target="_blank">
-    Proposta 2dM HUB REGEN SP
-  </a>
-  <a href="https://drive.google.com/file/d/1o5muVAb6tYM33YfAV4Y39nhGfI5vUY8a/view" target="_blank">
-    Pindorama Tech
-  </a>
-  <a href="https://drive.google.com/file/d/1CXvEnamgYqPzB2BfOv5UjkZ5Qr-cvfkm/view" target="_blank">
-    Pindorama Tecnologias Sistêmicas
-  </a>
+  <a href="https://app.charmverse.io/greenpillbrasil/2dm-projects-02471603878898443" target="_blank">Proposta 2dM HUB REGEN SP</a>
+  <a href="https://drive.google.com/file/d/1o5muVAb6tYM33YfAV4Y39nhGfI5vUY8a/view" target="_blank">Pindorama Tech</a>
 </section>
 
-<footer>
-  Iniciativa de apoio ao CTTC | Comunidade Regenerativa  
-  <br>
-  A mata é a prioridade 🌱
-</footer>
+<footer>Iniciativa de apoio ao CTTC | Comunidade Regenerativa  
+A mata é a prioridade 🌱</footer>
 
+<!-- Modal de Confirmação -->
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Confirmar Número <span id="numero-selecionado" style="color: var(--verde-vivo );"></span></h2>
+    <form id="confirmForm">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      <label for="telefone">Seu WhatsApp (com DDD):</label>
+      <input type="tel" id="telefone" name="telefone" placeholder="Ex: 11987654321" required>
+      <label for="transacao">ID da Transação (Pix ou Hash Cripto):</label>
+      <input type="text" id="transacao" name="transacao" required>
+      <button type="submit" class="btn">Confirmar Compra</button>
+      <p id="modal-message"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:3000"; // Endereço da sua API
+    const numbersContainer = document.getElementById("rifa-numeros" );
+    const modal = document.getElementById("confirmModal");
+    const closeModal = document.querySelector(".close");
+    const form = document.getElementById("confirmForm");
+    const numeroSelecionadoSpan = document.getElementById("numero-selecionado");
+    const modalMessage = document.getElementById("modal-message");
+    let selectedNumber = null;
+
+    // Função para buscar e renderizar os números
+    async function carregarNumeros() {
+        try {
+            const response = await fetch(`${API_URL}/status-numeros`);
+            const numeros = await response.json();
+            numbersContainer.innerHTML = ''; // Limpa os números existentes
+
+            for (let i = 1; i <= 50; i++) {
+                const numData = numeros[i];
+                const numDiv = document.createElement('div');
+                numDiv.classList.add('number');
+                numDiv.textContent = i.toString().padStart(2, '0');
+                numDiv.dataset.number = i;
+
+                if (numData && numData.status === 'pago') {
+                    numDiv.classList.add('pago');
+                    numDiv.title = `Comprado por ${numData.dono}`;
+                } else {
+                    numDiv.addEventListener('click', () => abrirModal(i));
+                }
+                numbersContainer.appendChild(numDiv);
+            }
+        } catch (error) {
+            numbersContainer.innerHTML = '<p class="error">Erro ao carregar os números. A API está online?</p>';
+            console.error("Erro ao carregar números:", error);
+        }
+    }
+
+    function abrirModal(num) {
+        selectedNumber = num;
+        numeroSelecionadoSpan.textContent = num.toString().padStart(2, '0');
+        form.reset();
+        modalMessage.textContent = '';
+        modal.style.display = "block";
+    }
+
+    closeModal.onclick = () => modal.style.display = "none";
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        modalMessage.textContent = 'Enviando...';
+        modalMessage.className = '';
+
+        const dados = {
+            nome: document.getElementById("nome").value,
+            telefone: document.getElementById("telefone").value,
+            numero: selectedNumber,
+            transacao: document.getElementById("transacao").value,
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/confirmar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Ocorreu um erro.');
+            }
+
+            modalMessage.textContent = "Sucesso! Seu número foi confirmado.";
+            modalMessage.classList.add('success');
+            
+            setTimeout(() => {
+                modal.style.display = "none";
+                carregarNumeros(); // Recarrega os números para mostrar o novo status
+            }, 2000);
+
+        } catch (error) {
+            modalMessage.textContent = `Erro: ${error.message}`;
+            modalMessage.classList.add('error');
+        }
+    });
+
+    // Carrega os números quando a página é aberta
+    document.addEventListener('DOMContentLoaded', carregarNumeros);
+</script>
 </body>
 </html>
