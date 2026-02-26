@@ -1,85 +1,82 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const cors = require("cors"); // Importa o pacote CORS
+const cors = require("cors");
 const app = express();
 
-app.use(cors()); // Habilita o CORS para permitir a comunicação com o frontend
+app.use(cors());
 app.use(bodyParser.json());
 
-// --- ATENÇÃO: Substitua pelos seus dados ---
-const WHATSAPP_TOKEN = "SEU_TOKEN_DA_META"; // Token de acesso da API do WhatsApp
-const PHONE_NUMBER_ID = "SEU_PHONE_NUMBER_ID"; // ID do número de telefone (remetente)
-const ADMIN_NUMBER = "5511999999999"; // Número do administrador que receberá a notificação
+// --- SUBSTITUA PELOS SEUS DADOS ---
+const WHATSAPP_TOKEN = "SEU_TOKEN_DA_META";
+const PHONE_NUMBER_ID = "SEU_PHONE_NUMBER_ID";
+const ADMIN_NUMBER = "55SEUNUMEROAQUI";
 
-// Simulação de um "banco de dados" para os números da rifa
-// Em um projeto real, use um banco de dados como SQLite, PostgreSQL ou MongoDB.
+// Simulação de banco de dados
 const rifaNumeros = {};
 for (let i = 1; i <= 50; i++) {
-    rifaNumeros[i] = { status: "disponivel", dono: null }; // Status: disponivel, reservado, pago
+    rifaNumeros[i] = { status: "disponivel", dono: null };
 }
 
-// Rota para o frontend obter o status atual de todos os números
 app.get("/status-numeros", (req, res) => {
     res.json(rifaNumeros);
 });
 
-// Rota para confirmar a compra de um número
+// Rota modificada para aceitar um array de números
 app.post("/confirmar", async (req, res) => {
-    const { nome, telefone, numero, transacao } = req.body;
+    // Agora esperamos 'numeros' (plural) como um array
+    const { nome, telefone, numeros, transacao } = req.body;
 
-    // Validação básica dos dados recebidos
-    if (!nome || !telefone || !numero || !transacao) {
-        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+    if (!nome || !telefone || !numeros || !transacao || !Array.isArray(numeros) || numeros.length === 0) {
+        return res.status(400).json({ error: "Dados inválidos. É necessário selecionar pelo menos um número." });
     }
 
-    if (!rifaNumeros[numero] || rifaNumeros[numero].status !== "disponivel") {
-        return res.status(400).json({ error: "Este número não está mais disponível." });
+    // Verifica se TODOS os números selecionados estão disponíveis
+    for (const numero of numeros) {
+        if (!rifaNumeros[numero] || rifaNumeros[numero].status !== "disponivel") {
+            return res.status(400).json({ error: `O número ${numero} não está mais disponível. Por favor, atualize a página e tente novamente.` });
+        }
     }
 
-    // Atualiza o status do número
-    rifaNumeros[numero] = { status: "pago", dono: nome };
+    // Se todos estiverem disponíveis, marca todos como pagos
+    numeros.forEach(numero => {
+        rifaNumeros[numero] = { status: "pago", dono: nome };
+    });
 
-    // Mensagem para o administrador
+    // Formata a lista de números para a mensagem
+    const numerosString = numeros.join(', ');
+
     const mensagemAdmin = `
-📢 NOVA COMPRA DE RIFA CONFIRMADA
+📢 NOVA COMPRA DE RIFA (MÚLTIPLA)
 ---------------------------------
 Nome: ${nome}
 Telefone: ${telefone}
-Número Escolhido: ${numero}
+Números Escolhidos: ${numerosString}
+Valor Total: R$ ${numeros.length * 10},00
 Comprovante/Hash: ${transacao}
 ---------------------------------
-O número ${numero} foi marcado como PAGO.
+Os números foram marcados como PAGOS.
 `;
 
     try {
-        // Envia a notificação para o administrador via WhatsApp
         await axios.post(
             `https://graph.facebook.com/v18.0/${PHONE_NUMBER_ID}/messages`,
-            {
-                messaging_product: "whatsapp",
-                to: ADMIN_NUMBER,
-                type: "text",
-                text: { body: mensagemAdmin },
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${WHATSAPP_TOKEN}`,
-                    "Content-Type": "application/json",
-                },
-            }
+            { messaging_product: "whatsapp", to: ADMIN_NUMBER, type: "text", text: { body: mensagemAdmin } },
+            { headers: { Authorization: `Bearer ${WHATSAPP_TOKEN}`, "Content-Type": "application/json" } }
          );
 
-        // Responde ao frontend com sucesso
-        res.json({ status: "Pagamento confirmado e administrador notificado com sucesso!" });
+        res.json({ status: "Pagamento confirmado e administrador notificado!" });
 
     } catch (error) {
-        console.error("Erro detalhado:", error.response ? error.response.data : error.message);
-        // Mesmo com erro no WhatsApp, o número foi salvo. Informa o erro.
-        rifaNumeros[numero] = { status: "disponivel", dono: null }; // Reverte o status em caso de erro
-        res.status(500).json({ error: "Erro ao enviar notificação para o administrador. Tente novamente." });
+        console.error("Erro no WhatsApp:", error.response ? error.response.data : error.message);
+        // Reverte o status de todos os números em caso de erro no envio
+        numeros.forEach(numero => {
+            rifaNumeros[numero] = { status: "disponivel", dono: null };
+        });
+        res.status(500).json({ error: "Erro ao enviar notificação. A compra foi cancelada. Tente novamente." });
     }
 });
 
-const PORT = 3000;
+// Use a porta fornecida pelo ambiente de hospedagem, ou 3000 como padrão
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`API da rifa rodando na porta ${PORT}`));
