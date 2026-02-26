@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorteio Tambor Xamânico | Apoio CTTC</title>
+
+<style>
+
+/* ====== PALETA REGENERATIVA ====== */
+:root {
+  --verde-floresta: #0B3D2E;
+  --verde-vivo: #1F7A4C;
+  --verde-claro: #4CAF50;
+  --amarelo-sol: #F4C430;
+  --bege-terra: #F5F1E6;
+  --branco: #FFFFFF;
+}
+
+/* ====== RESET ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: var(--bege-terra);
+  color: var(--verde-floresta);
+  text-align: center;
+}
+
+/* ====== HERO ====== */
+.hero {
+  background: linear-gradient(135deg, var(--verde-floresta), var(--verde-vivo));
+  color: var(--branco);
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ====== IMAGEM ====== */
+.image-section {
+  margin: 40px 20px;
+}
+
+.image-section img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* ====== NUMEROS ====== */
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 10px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.number {
+  background: var(--verde-claro);
+  color: var(--branco);
+  padding: 15px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.number:hover {
+  background: var(--amarelo-sol);
+  color: var(--verde-floresta);
+}
+
+/* ====== BOTÃO ====== */
+.btn {
+  background: var(--amarelo-sol);
+  color: var(--verde-floresta);
+  padding: 15px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin: 20px 0;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: var(--verde-vivo);
+  color: var(--branco);
+}
+
+/* ====== CONTRIBUIÇÕES ====== */
+.contributions {
+  margin: 40px 20px;
+  font-size: 0.95rem;
+}
+
+.contributions p {
+  margin: 8px 0;
+}
+
+/* ====== LINKS ====== */
+.links {
+  margin: 40px 20px;
+}
+
+.links a {
+  display: block;
+  margin: 10px 0;
+  color: var(--verde-vivo);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  margin: 50px 0 20px 0;
+  font-size: 0.8rem;
+  color: var(--verde-floresta);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Sorteio Solidário – Tambor Xamânico</h1>
+  <p>
+    50 números | R$ 10 cada  
+    <br>
+    Apoio ao primeiro piloto da Célula de Transferência Tecnológica Comunitária (CTTC)
+  </p>
+</section>
+
+<!-- FOTO -->
+<section class="image-section">
+  <!-- Substituir pelo link da foto oficial -->
+  <img src="https://via.placeholder.com/350x350.png?text=Tambor+Xamanico" alt="Tambor Xamânico">
+</section>
+
+<!-- NUMEROS -->
+<section>
+  <h2>Escolha seu número</h2>
+  <div class="numbers">
+    <!-- 01 a 50 -->
+    <script>
+      for(let i=1; i<=50; i++){
+        let num = i.toString().padStart(2,'0');
+        document.write(`<div class="number">${num}</div>`);
+      }
+    </script>
+  </div>
+</section>
+
+<!-- BOTÃO APOIAR -->
+<a href="#" class="btn">Apoiar e Confirmar Número</a>
+
+<!-- CONTRIBUIÇÕES -->
+<section class="contributions">
+  <h3>Contribuições</h3>
+  <p><strong>Chave Pix:</strong> contatos.2dm@gmail.com</p>
+  <p><strong>Carteira Web3 (Metamask):</strong><br>
+  0xe35C47EFE510f0220454f89e547610c84647267c</p>
+</section>
+
+<!-- LINKS -->
+<section class="links">
+  <h3>Saiba mais</h3>
+  <a href="https://app.charmverse.io/greenpillbrasil/2dm-projects-02471603878898443" target="_blank">
+    Proposta 2dM HUB REGEN SP
+  </a>
+  <a href="https://drive.google.com/file/d/1o5muVAb6tYM33YfAV4Y39nhGfI5vUY8a/view" target="_blank">
+    Pindorama Tech
+  </a>
+  <a href="https://drive.google.com/file/d/1CXvEnamgYqPzB2BfOv5UjkZ5Qr-cvfkm/view" target="_blank">
+    Pindorama Tecnologias Sistêmicas
+  </a>
+</section>
+
+<footer>
+  Iniciativa de apoio ao CTTC | Comunidade Regenerativa  
+  <br>
+  A mata é a prioridade 🌱
+</footer>
+
+</body>
+</html>
