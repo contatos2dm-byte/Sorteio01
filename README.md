@@ -1,5 +1,3 @@
-Perfeito. Abaixo está um **README.md completo**, estruturado para GitHub, Notion ou repositório público Web3, explicando o projeto como um todo — e finalizando com a explicação da rifa do tambor como doação para estruturar o fundo social coletivo da **Célula de Transferência Tecnológica Comunitária (CTTC)**.
-
 ---
 
 # 🌿 Pin-dorama Tecnologias Sistêmicas
