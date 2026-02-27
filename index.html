@@ -154,7 +154,7 @@ text-decoration:none;
 
 <div class="donation-box">
 <div class="meta"><strong>Meta:</strong> R$ 500 (50 números de R$10)</div>
-<div class="meta"><strong>Arrecadado:</strong> R$ 30 <span id="valorAtual">0</span></div>
+<div class="meta"><strong>Arrecadado:</strong> R$ <span id="valorAtual">30</span></div>
 
 <div class="progress-bar">
 <div class="progress" id="barra"></div>
@@ -223,7 +223,7 @@ Os recursos são destinados às atividades do projeto, conforme o Código Civil 
 
 <script>
 const meta = 500;
-let arrecadado = 0;
+let arrecadado = 30;
 
 function calcular(){
 const porcentagem = Math.floor((arrecadado/meta)*100);
